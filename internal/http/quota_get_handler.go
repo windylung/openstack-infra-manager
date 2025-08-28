@@ -25,11 +25,13 @@ func (s *QuotaGetServer) Current(w http.ResponseWriter, r *http.Request) {
 
 	nova, nErr := s.OS.GetNovaQuotaDetail(r.Context(), projectID)
 	cind, cErr := s.OS.GetCinderQuotaDetail(r.Context(), projectID)
-	if nErr != nil || cErr != nil {
+	neutron, nErr2 := s.OS.GetNeutronQuotaDetail(r.Context(), projectID)
+	if nErr != nil || cErr != nil || nErr2 != nil {
 		WriteJSON(w, http.StatusBadGateway, map[string]any{
-			"error":  "quota read failed",
-			"nova":   errString(nErr),
-			"cinder": errString(cErr),
+			"error":   "quota read failed",
+			"nova":    errString(nErr),
+			"cinder":  errString(cErr),
+			"neutron": errString(nErr2),
 		})
 		return
 	}
@@ -38,5 +40,6 @@ func (s *QuotaGetServer) Current(w http.ResponseWriter, r *http.Request) {
 		"projectId": projectID,
 		"nova":      nova,
 		"cinder":    cind,
+		"neutron":   neutron,
 	})
 }

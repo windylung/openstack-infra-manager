@@ -6,6 +6,7 @@ import (
 
 	cqs "github.com/gophercloud/gophercloud/v2/openstack/blockstorage/v3/quotasets"
 	novaqs "github.com/gophercloud/gophercloud/v2/openstack/compute/v2/quotasets"
+	neutronqs "github.com/gophercloud/gophercloud/v2/openstack/networking/v2/extensions/quotas"
 )
 
 type QuotaDetail struct {
@@ -23,6 +24,11 @@ type CinderQuotaDetail struct {
 	Gigabytes QuotaDetail `json:"gigabytes"` // GB
 	Volumes   QuotaDetail `json:"volumes"`
 	Snapshots QuotaDetail `json:"snapshots"`
+}
+
+type NeutronQuotaDetail struct {
+	Port       QuotaDetail `json:"port"`
+	FloatingIP QuotaDetail `json:"floatingIP"`
 }
 
 func (c *Clients) GetNovaQuotaDetail(ctx context.Context, projectID string) (*NovaQuotaDetail, error) {
@@ -48,5 +54,18 @@ func (c *Clients) GetCinderQuotaDetail(ctx context.Context, targetProjectID stri
 		Gigabytes: QuotaDetail{Limit: q.Gigabytes.Limit, InUse: q.Gigabytes.InUse},
 		Volumes:   QuotaDetail{Limit: q.Volumes.Limit, InUse: q.Volumes.InUse},
 		Snapshots: QuotaDetail{Limit: q.Snapshots.Limit, InUse: q.Snapshots.InUse},
+	}, nil
+}
+
+// GetNeutronQuotaDetail gets detailed Neutron quotas for a project
+func (c *Clients) GetNeutronQuotaDetail(ctx context.Context, projectID string) (*NeutronQuotaDetail, error) {
+	quota, err := neutronqs.Get(ctx, c.NetworkV2, projectID).Extract()
+	if err != nil {
+		return nil, fmt.Errorf("get neutron quota: %w", err)
+	}
+
+	return &NeutronQuotaDetail{
+		Port:       QuotaDetail{Limit: quota.Port, InUse: 0}, // Neutron doesn't provide InUse by default
+		FloatingIP: QuotaDetail{Limit: quota.FloatingIP, InUse: 0},
 	}, nil
 }

@@ -13,6 +13,8 @@ type Clients struct {
 	Identity       *gophercloud.ServiceClient
 	ComputeV2      *gophercloud.ServiceClient
 	BlockStorageV3 *gophercloud.ServiceClient
+	ImageV2        *gophercloud.ServiceClient
+	NetworkV2      *gophercloud.ServiceClient
 	AdminProjectID string
 	Region         string
 }
@@ -38,11 +40,23 @@ func NewServiceClients(cfg *config.Config) (*Clients, error) {
 		return nil, fmt.Errorf("new blockstorage v3: %w", err)
 	}
 
+	image, err := openstack.NewImageV2(provider, gophercloud.EndpointOpts{Region: cfg.RegionName})
+	if err != nil {
+		return nil, fmt.Errorf("new image v2: %w", err)
+	}
+
+	network, err := openstack.NewNetworkV2(provider, gophercloud.EndpointOpts{Region: cfg.RegionName})
+	if err != nil {
+		return nil, fmt.Errorf("new network v2: %w", err)
+	}
+
 	return &Clients{
 		Provider:       provider,
 		Identity:       ident,
 		ComputeV2:      compute,
 		BlockStorageV3: block,
+		ImageV2:        image,
+		NetworkV2:      network,
 		AdminProjectID: cfg.AdminProjectID,
 		Region:         cfg.RegionName,
 	}, nil

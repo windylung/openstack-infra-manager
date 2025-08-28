@@ -1,0 +1,28 @@
+Issued Token ID: gAAAAABor7e6WrYtImzIpsPh570KUtAQaVya0Ben_uB1aOcX25L8LtbR5bj-pI5Zoqqfp-FF-OF2mGPZWGQqtO8WLDtVHojF6Hr1Ur6Yfo5ZI8XmjjXQx8crNXNjxi5XKXqtdHCvTA6CpjGR-F4mrneDiTYTMRYD8Y6M28_aqb4sxaOwuRhUUe0
+--- Images ---
+ID: 4a83c094-4e19-424c-9a80-83080fad7682, Name: cirros-0.6.3-aarch64-disk
+
+--- Flavors ---
+ID: 1, Name: m1.tiny, vCPUs: 1, RAM: 512MB, Disk: 1GB
+ID: 2, Name: m1.small, vCPUs: 1, RAM: 2048MB, Disk: 20GB
+ID: 3, Name: m1.medium, vCPUs: 2, RAM: 4096MB, Disk: 40GB
+ID: 4, Name: m1.large, vCPUs: 4, RAM: 8192MB, Disk: 80GB
+ID: 42, Name: m1.nano, vCPUs: 1, RAM: 192MB, Disk: 1GB
+ID: 5, Name: m1.xlarge, vCPUs: 8, RAM: 16384MB, Disk: 160GB
+ID: 84, Name: m1.micro, vCPUs: 1, RAM: 256MB, Disk: 1GB
+ID: c1, Name: cirros256, vCPUs: 1, RAM: 256MB, Disk: 1GB
+ID: d1, Name: ds512M, vCPUs: 1, RAM: 512MB, Disk: 5GB
+ID: d2, Name: ds1G, vCPUs: 1, RAM: 1024MB, Disk: 10GB
+ID: d3, Name: ds2G, vCPUs: 2, RAM: 2048MB, Disk: 10GB
+ID: d4, Name: ds4G, vCPUs: 4, RAM: 4096MB, Disk: 20GB
+
+--- Keypairs ---
+Name: my-key, Fingerprint: e5:70:1b:82:0d:ca:6f:39:cf:50:41:cf:e8:ab:df:b5
+
+--- Security Groups ---
+ID: 7b5e648c-a5d3-48f8-83a1-9d688a4b442b, Name: default, Description: Default security group
+ID: 83c0acbe-b6fb-486c-96e2-3a32ccdb6cc9, Name: default, Description: Default security group
+ID: b749c0d6-b4db-45c4-ac5b-fda742126757, Name: default-ssh, Description: SSH/ICMP
+2025/08/28 10:58:18 server listening on :8080
+2025/08/28 10:58:18 listen tcp :8080: bind: address already in use
+exit status 1
